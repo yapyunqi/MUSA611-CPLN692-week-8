@@ -29,7 +29,7 @@ var tileOpts = {
 var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', tileOpts).addTo(map);
 
 
-$.ajax('https://raw.githubusercontent.com/CPLN-692-401/datasets/master/geojson/philadelphia-crime-points.geojson').done(function(data) {
+$.ajax('https://raw.githubusercontent.com/MUSA611-CPLN692-spring2020/datasets/master/geojson/philadelphia-crime-points.geojson').done(function(data) {
   crimeData = JSON.parse(data);
   // Fixing an AWFUL bug caused by BAD data: Features *NEED* to have geometries...
   crimeData.features = _.filter(crimeData.features, function(f) { return f.geometry; });

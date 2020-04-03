@@ -14,7 +14,7 @@ Build an application that meets the following specifications
 
 Here is a video of what this would look like for two points: http://g.recordit.co/5pTMukE3PR.gif
 
-Documentation of route optimization: https://www.mapbox.com/api-documentation/#optimization
+Documentation of route optimization: https://docs.mapbox.com/api/navigation/#optimization
 
 To get the route between your two markers, you will need to make an AJAX call to the Mapbox
 optimized_route API. The text you send to the API should be formatted like this:
@@ -26,9 +26,6 @@ a format we can't use directly. It will be a string that looks something like th
 
 `ee~jkApakppCmPjB}TfCuaBbQa|@lJsd@dF|Dl~@pBfb@t@bQ?tEOtEe@vCs@xBuEfNkGdPMl@oNl^eFxMyLrZoDlJ{JhW}JxWuEjL]z@mJlUeAhC}Tzi@kAv`...
 
-Note that the file `decode.js` is included, which introduces a function `decode`. If you pass the
-shape string to the `decode` function, it will return an array of points in [lat, lng] format.
-
 To plot these on the map, write a function to convert them to GeoJSON. Take a look at what GeoJSON
 for a line looks like (you may want to create a line on geojson.io as an example). How can you
 convert the array of points into the GeoJSON format? Hint: GeoJSON defines points as [lng, lat]
@@ -39,12 +36,7 @@ instead of [lat, lng], so you may need to flip your coordinates.
 /** ---------------
 State
 
-- `count` should increase by one each time you add a new marker.
-  This will help you figure out how many markers you have added
-- `marker1` should be set to the leaflet layer that is created when
-  you add your first marker
-- `marker2` should be set to the leaflet layer that is created when
-  you add your second marker
+- `markers` should keep track of all endpoints used to generate directions
 - `line` should be set to the leaflet layer of the route.
 
 Keeping track of `marker1`, `marker2`, and `line` will help us remove
@@ -52,10 +44,9 @@ them from the map when we need to reset the map.
 ---------------- */
 
 var state = {
-  count: 0,
   markers: [],
   line: undefined,
-}
+};
 
 /** ---------------
 Map configuration
@@ -99,7 +90,6 @@ var resetApplication = function() {
   _.each(state.markers, function(marker) { map.removeLayer(marker) })
   map.removeLayer(state.line);
 
-  state.count = 0;
   state.markers = []
   state.line = undefined;
   $('#button-reset').hide();

@@ -47,7 +47,7 @@ a cleaner, easier way to test ajax calls than simply using the console.
 
 Task 1: Use Mapbox's 'Search' API to 'geocode' information from your input
 
-The docs: https://www.mapbox.com/api-documentation/#geocoding
+The docs: https://docs.mapbox.com/api/search/#geocoding
 (For this first task, the URL pattern you'll want to produce looks like this:
 `https://api.mapbox.com/geocoding/v5/mapbox.places/{geocode_this}.json?access_token={your_mapbox_token}`)
 
@@ -68,10 +68,10 @@ Questions you should ask yourself:
   - Can I get a lat/lng from the output?
 
 
-Task 2: Use Mapbox's 'directions' API to generate a route based on your origin and destination
+Task 2: Use Mapbox's 'Navigation' API to generate a route based on your origin and destination
 
-The docs: https://www.mapbox.com/api-documentation/#directions
-(No example url provide, try to figure it out using the docs)
+The docs: https://docs.mapbox.com/api/navigation/#directions
+(No example url provided, try to figure it out using the docs)
 
 Again, the task is somewhat underspecified. Let's start with the simplest routing
 option available. Once you're getting a valid (as best you can tell) response
@@ -81,21 +81,19 @@ from the server, move to the next task.
 Task 3: Decode your route response
 
 Intrepid readers may have already discovered that route responses are NOT
-in the familiar GeoJson format. To see what I mean, look at the `geometry` property
+in the familiar GeoJSON format. To see what I mean, look at the `geometry` property
 of each `route` provided by the Mapbox `direction` response. Rather, they use a
 special encoding standardized by google to try and cut down on response sizes and
 response times. Relevant docs may be found here:
 https://developers.google.com/maps/documentation/utilities/polylineutility
 
-Luckily, the logic to properly decode such shapes is provided (copied
-from the documentation to decode.js). The string you'll have to decode will look
-something like this:
-
+The string you'll have to decode will look something like this:
 `ee~jkApakppCmPjB}TfCuaBbQa|@lJsd@dF|Dl~@pBfb@t@bQ?tEOtEe@vCs@xBuEfNkGdPMl@oNl^eFxMyLrZoDlJ{JhW}JxWuEjL]z@mJlUeAhC}Tzi@kAv`...
 
-Note that the file `decode.js` is included, which introduces a function `decode`.
-If you pass the shape string to the `decode` function, it will return an array of
-points in [lat, lng] format.
+A mapbox library for decoding these polylines is included for decoding these into
+an array of lat/lng coordinates from which a line can be constructed.
+Simply call `polyline.decode` on the polyline encoding.
+https://github.com/mapbox/polyline
 
 To plot these on the map, write a function to convert them to GeoJSON. Remember:
 GeoJSON is just an agreed upon format to storing shapes in JSON. Take a look
@@ -113,7 +111,7 @@ to the map should be a breeze.
 
 Task 5 (stretch): Display travel time (seconds and minutes) and distance (km or mi)
 
-Task 6 (stretch): See if you can refocus the map to roughly the bounding box of your route
+Task 6 (stretch): Refocus the map to roughly the bounding box of your route
 
 
 ===================== */
@@ -173,5 +171,4 @@ $(document).ready(function() {
   });
 
 });
-
 

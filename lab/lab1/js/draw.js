@@ -24,23 +24,42 @@ layer before adding it to the map.
 You will also need to remove the previous layer from the map.
 
 If you get the error: "Cannot read property '_leaflet_id' of undefined", it
-may be because you are trying to remove a layer that does not yet exist. Can you
-check to see if myRectangle is defined before trying to remove it?
+may be because you are trying to remove a layer that does not yet exist.
+Check to see if myRectangle is defined before trying to remove it.
 
 Task 4: Add shape to sidebar
 
 Let's add the shape we've created to the sidebar. In the HTML, there is a
-container with ID #shapes. Use jQuery's append function to add a new div inside
-the #shapes container. The idea should look like the following:
+container with ID #shapes. Use jQuery's `append` or `appendTo` function
+to add a new div inside the #shapes container. The HTML should look somewhat
+like the following:
+
+HINT 1: Templating is probably the best way to build HTML elements. Great news:
+javascript (finally) has a fantastic templating system. (If the docs don't
+help, bug your professor for an example!)
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+
+Hint 2: jQuery can help! Once you've built some HTML, jQuery can parse it. At
+that point, you should be able to modify it and use it like any other element
+jQuery has selected.
+https://api.jquery.com/jquery.parsehtml/
+
+Hint 3: We've never seen this "data-leaflet-id" thing. It's just an attribute like
+we've used before (think back to checkboxes, which required jQuery's 'attr'
+method https://api.jquery.com/attr/). As it turns out, we can stash data on HTML
+elements by creating as many attributes as we need!
+This is valid HTML: <div my-made-up-attribute='information-stored-in-string'></div>
+And it allows us to retrieve "information-stored-in-string" by querying
+"my-made-up-attribute"
 
 <div class="shape" data-leaflet-id="[the id]"><h1>Current ID: [the id]</h1></div>
 
 Where [the id] is replaced by the Leaflet ID of the layer.
 
-When a new layer is added, you can use jQuery's empty function to clear out the
-#shapes container before appending a new .shape.
+When a new layer is added, you can use jQuery's empty function to clear
+out the #shapes container before appending a new .shape.
 
-Task 5 (Stretch Goal): Store multiple shapes
+Task 5: Store multiple shapes
 
 Instead of showing one shape at a time, let's allow multiple shapes to be drawn.
 Instead of storing one Leaflet layer in the myRectangle variable, we should use
@@ -50,7 +69,7 @@ in the sidebar.
 Change the variable myRectangle to myRectangles and set it to equal an empty
 array. Change the rest of your code to push new layers into the array.
 
-Task 6 (Stretch Goal): Connect sidebar and map
+Task 6: Connect sidebar and map
 
 The HTML in the sidebar and the Leaflet layers on the map and in our Javascript
 variable can be linked by using the Leaflet ID. Modify the application so that
@@ -79,7 +98,8 @@ var drawControl = new L.Control.Draw({
     polygon: false,
     circle: false,
     marker: false,
-    rectangle: true,
+    circlemarker: false,
+    rectangle: true
   }
 });
 

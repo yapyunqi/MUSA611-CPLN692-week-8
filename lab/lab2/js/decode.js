@@ -1,5 +1,4 @@
-// This is adapted from the implementation in Project-OSRM
-// https://github.com/DennisOSRM/Project-OSRM-Web/blob/master/WebContent/routing/OSRM.RoutingGeometry.js
+// A deprecated function for decoding polylines; kept around as an example
 var decode = function(str, precision) {
     var index = 0,
         lat = 0,
