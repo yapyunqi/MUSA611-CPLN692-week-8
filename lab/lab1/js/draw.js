@@ -69,6 +69,9 @@ in the sidebar.
 Change the variable myRectangle to myRectangles and set it to equal an empty
 array. Change the rest of your code to push new layers into the array.
 
+ADD myRectangles
+myRectangles.push(layer)
+
 Task 6: Connect sidebar and map
 
 The HTML in the sidebar and the Leaflet layers on the map and in our Javascript
@@ -79,6 +82,8 @@ clicking on a shape in the sidebar will do one of the following:
 - Delete the corresponding shape on the map (be sure to remove it from the
 sidebar and the myRectanges array)
 - Anything else you can think of!
+
+jquery lookup by attribute
 
 Task 7 (Stretch Goal): Reverse Task 6
 
@@ -110,4 +115,18 @@ map.on('draw:created', function (e) {
     var type = e.layerType; // The type of shape
     var layer = e.layer; // The Leaflet layer for the shape
     var id = L.stamp(layer); // The unique Leaflet ID for the layer
+    // if (myRectangle) {map.removeLayer(myRectangle);} // if there is already a rectangle, delete it
+    myRectangle = layer;
+    map.addLayer(myRectangle); // adding the rectangle
+
+    myRectangles = []; // part 5
+    myRectangles.push(myRectangle);
+
+    var jhtml = $.parseHTML(`<div class="shape" data-leaflet-id=${id}><h1>Current ID:${id}</h1></div>`) // part 4
+    $('#shapes').append(jhtml);
+
+    layer.on("mouseover", function(e) { // part 6
+      console.log(e.target._leaflet_id);
+      $(`div[data-leaflet-id|=${e.target._leaflet_id}]`).css('background-color', 'red')
+    });
 });
